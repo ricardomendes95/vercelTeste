@@ -1,24 +1,23 @@
-import { useState, FormEvent } from 'react';
-import { Flex, Image, Button, Text } from '@chakra-ui/core'
-import Input from '../components/Input'
-import axios from 'axios';
+import { useState, FormEvent } from "react"
+import { Flex, Image, Button, Text } from "@chakra-ui/core"
+import Input from "../components/Input"
+import axios from "axios"
 
 export default function Home() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("")
 
   function handleSignUpToNewsletter(event: FormEvent) {
-    event.preventDefault();
+    event.preventDefault()
 
-    axios.post('/api/subscribe', { email });
+    axios.post("/api/subscribe", { email })
+  }
+  async function handleShow() {
+    const content = await axios.get("/api/subscribes")
+    console.log(content)
   }
 
   return (
-    <Flex
-      as="main"
-      height="100vh"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Flex as="main" height="100vh" justifyContent="center" alignItems="center">
       <Flex
         as="form"
         onSubmit={handleSignUpToNewsletter}
@@ -28,20 +27,26 @@ export default function Home() {
         alignItems="stretch"
         padding={8}
         marginTop={4}
-        width="100%" 
+        width="100%"
         maxW="400px"
       >
         <Image marginBottom={8} src="/rocketseat.svg" alt="Rocketseat" />
 
-        <Text textAlign="center" fontSize="sm" color="gray.400" marginBottom={2}>
-          Assine a newsletter da Rocketseat e receba os melhores conteúdos sobre programação!
+        <Text
+          textAlign="center"
+          fontSize="sm"
+          color="gray.400"
+          marginBottom={2}
+        >
+          Assine a newsletter da Rocketseat e receba os melhores conteúdos sobre
+          programação!
         </Text>
 
         <Input
           placeholder="Seu melhor e-mail"
           marginTop={2}
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <Button
@@ -50,9 +55,19 @@ export default function Home() {
           height="50px"
           borderRadius="sm"
           marginTop={6}
-          _hover={{ backgroundColor: 'purple.600' }}
+          _hover={{ backgroundColor: "purple.600" }}
         >
           INSCREVER
+        </Button>
+        <Button
+          onClick={handleShow}
+          backgroundColor="purple.500"
+          height="50px"
+          borderRadius="sm"
+          marginTop={6}
+          _hover={{ backgroundColor: "purple.600" }}
+        >
+          mostrar
         </Button>
       </Flex>
     </Flex>

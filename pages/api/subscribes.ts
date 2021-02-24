@@ -30,10 +30,9 @@ export default async (request: NowRequest, response: NowResponse) => {
 
   const collection = db.collection("subscribers")
 
-  await collection.insertOne({
-    email,
-    subscribedAt: new Date(),
-  })
+  const subs = await collection.find().toArray()
 
-  return response.status(201).json({ ok: true })
+  console.log(subs)
+
+  return response.status(201).json(subs)
 }
